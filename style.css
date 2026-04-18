@@ -20,24 +20,6 @@
   --transition-speed: 0.3s;
 }
 
-[data-theme="dark"] {
-  /* Dark Theme Colors */
-  --bg-color: #0f172a;
-  --bg-surface: #1e293b;
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --border-color: #334155;
-  
-  --primary-color: #818cf8;
-  --primary-hover: #6366f1;
-  
-  --card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3);
-  --card-shadow-hover: 0 10px 15px -3px rgb(0 0 0 / 0.4);
-  
-  --tag-bg: #1e3a8a;
-  --tag-text: #60a5fa;
-}
-
 /* Reset & Global */
 * {
   box-sizing: border-box;
@@ -50,7 +32,6 @@ body {
   background-color: var(--bg-color);
   color: var(--text-primary);
   line-height: 1.6;
-  transition: background-color var(--transition-speed), color var(--transition-speed);
   min-height: 100vh;
 }
 
@@ -68,7 +49,6 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  transition: background-color var(--transition-speed), border-color var(--transition-speed);
 }
 
 .header-content {
