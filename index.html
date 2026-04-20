@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +15,6 @@
             --input-bg: #F2F2F7;
         }
 
-        /* 다크모드 강제 적용을 위한 속성 선택자 */
         [data-theme="dark"] {
             --bg: #0F1115;
             --card-bg: #1A1D23;
@@ -50,15 +49,15 @@
 
         .theme-toggle {
             cursor: pointer;
-            padding: 10px 20px;
+            padding: 10px 22px;
             border-radius: 20px;
             border: 2px solid var(--accent);
             background: var(--card-bg);
             color: var(--accent);
             font-weight: bold;
-            transition: 0.2s;
+            transition: 0.3s;
         }
-        .theme-toggle:hover { opacity: 0.8; transform: scale(1.05); }
+        .theme-toggle:hover { background: var(--accent); color: white; }
 
         .search-section {
             width: 100%;
@@ -90,7 +89,9 @@
             max-width: 1200px;
             padding: 10px 20px;
             box-sizing: border-box;
+            scrollbar-width: none;
         }
+        .tabs::-webkit-scrollbar { display: none; }
 
         .tab {
             padding: 12px 24px;
@@ -156,33 +157,33 @@
         pre { background: var(--input-bg); padding: 25px; border-radius: 15px; white-space: pre-wrap; line-height: 1.8; color: var(--text-main); }
     </style>
 </head>
-<body data-theme="light">
+<body>
     <div class="top-bar">
-        <h2>BATTERY <span style="color:var(--accent)">AI</span> PORTAL</h2>
-        <button class="theme-toggle" id="theme-btn">🌓 테마 전환 (다크/화이트)</button>
+        <h2 style="margin:0">BATTERY <span style="color:var(--accent)">AI</span> PORTAL</h2>
+        <button class="theme-toggle" onclick="toggleTheme()">🌓 테마 전환</button>
     </div>
 
     <div class="search-section">
         <h1>배터리 전문가 프롬프트 가이드</h1>
-        <input type="text" class="search-bar" id="search-input" placeholder="검색어를 입력하세요...">
+        <input type="text" class="search-bar" placeholder="주제를 검색하세요 (예: 열폭주, 원가, 4680...)" onkeyup="handleSearch(this.value)">
     </div>
 
-    <div class="tabs" id="tab-container">
-        <div class="tab active" data-cat="all">전체보기</div>
-        <div class="tab" data-cat="planner">📈 상품기획</div>
-        <div class="tab" data-cat="rd">🧠 R&D / BMS</div>
+    <div class="tabs">
+        <div class="tab active" onclick="filterCategory('all', this)">전체보기</div>
+        <div class="tab" onclick="filterCategory('planner', this)">📈 상품기획</div>
+        <div class="tab" onclick="filterCategory('rd', this)">🧠 R&D / BMS</div>
         <div class="tab" onclick="filterCategory('producer', this)">🏭 생산공정</div>
-        <div class="tab" data-cat="marketer">📣 마케팅</div>
+        <div class="tab" onclick="filterCategory('marketer', this)">📣 마케팅</div>
     </div>
 
     <div class="prompt-grid" id="prompt-grid"></div>
 
-    <div class="modal" id="modal">
-        <div class="modal-content">
-            <span class="close-btn" id="modal-close">&times;</span>
+    <div class="modal" id="modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
             <div class="modal-img" id="modal-img"></div>
             <div class="modal-body">
-                <h2 id="modal-title"></h2>
+                <h2 id="modal-title" style="margin-top:0"></h2>
                 <pre id="modal-prompt"></pre>
             </div>
         </div>
@@ -191,31 +192,6 @@
     <script src="main.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
