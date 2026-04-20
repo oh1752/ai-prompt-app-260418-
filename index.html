@@ -218,7 +218,7 @@
         }
     </style>
 </head>
-<body>
+<body data-theme="light">
     <div class="top-bar">
         <h2 style="margin:0">BATTERY <span style="color:var(--accent)">AI</span> PORTAL</h2>
         <button class="theme-toggle" onclick="toggleTheme()">🌓 Light/Dark Mode</button>
@@ -231,11 +231,11 @@
     </div>
 
     <div class="tabs" id="category-tabs">
-        <div class="tab active" onclick="filterCategory('all', event)">전체</div>
-        <div class="tab" onclick="filterCategory('planner', event)">📈 상품기획</div>
-        <div class="tab" onclick="filterCategory('rd', event)">🧠 R&D / BMS</div>
-        <div class="tab" onclick="filterCategory('producer', event)">🏭 생산공정</div>
-        <div class="tab" onclick="filterCategory('marketer', event)">📣 마케팅</div>
+        <div class="tab active" onclick="filterCategory('all', this)">전체</div>
+        <div class="tab" onclick="filterCategory('planner', this)">📈 상품기획</div>
+        <div class="tab" onclick="filterCategory('rd', this)">🧠 R&D / BMS</div>
+        <div class="tab" onclick="filterCategory('producer', this)">🏭 생산공정</div>
+        <div class="tab" onclick="filterCategory('marketer', this)">📣 마케팅</div>
     </div>
 
     <div class="prompt-grid" id="prompt-grid">
@@ -244,7 +244,7 @@
 
     <div class="modal" id="prompt-modal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <span class="close-btn" onclick="closeModal(event)">&times;</span>
             <div class="modal-img" id="modal-img"></div>
             <div class="modal-body">
                 <h2 id="modal-title" style="margin-top:0"></h2>
@@ -256,22 +256,7 @@
 
     <script src="main.js"></script>
 </body>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </html>
-
 
 
 
