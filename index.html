@@ -1,51 +1,145 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI 프롬프트 저장소</title>
-  <link href='/style.css' rel='stylesheet'>
-  <!-- Phosphor Icons for modern iconography -->
-  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battery Industry Intelligence | Command Center</title>
+    <!-- Chart.js for professional data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-dark: #0F1115;
+            --card-bg: #1A1D23;
+            --accent-blue: #007AFF;
+            --accent-green: #34C759;
+            --accent-purple: #5856D6;
+            --accent-orange: #FF9500;
+            --text-main: #FFFFFF;
+            --text-dim: #8E8E93;
+        }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 240px;
+            background: var(--card-bg);
+            border-right: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+        .sidebar h2 { font-size: 1.2rem; color: var(--accent-blue); margin-bottom: 30px; }
+        .nav-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 10px;
+            cursor: pointer;
+            color: var(--text-dim);
+            transition: 0.3s;
+        }
+        .nav-item:hover, .nav-item.active {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .full-width { grid-column: 1 / span 3; }
+        .half-width { grid-column: 1 / span 2; }
+
+        /* Typography */
+        .card h3 { margin-top: 0; font-size: 0.9rem; color: var(--text-dim); text-transform: uppercase; }
+        .card .value { font-size: 1.8rem; font-weight: bold; margin: 10px 0; }
+        .card .trend { font-size: 0.8rem; }
+        .up { color: var(--accent-green); }
+        .down { color: #FF3B30; }
+
+        /* Custom Styles */
+        canvas { width: 100% !important; height: 200px !important; }
+    </style>
 </head>
 <body>
-  <header class="header">
-    <div class="header-content">
-      <div class="logo">
-        <i class="ph-fill ph-magic-wand"></i>
-        <span>PromptHub</span>
-      </div>
+    <div class="sidebar">
+        <h2>BATTERY INTEL</h2>
+        <div class="nav-item active" onclick="showView('planner')">📊 상품기획 (Strategy)</div>
+        <div class="nav-item" onclick="showView('developer')">🧠 R&D/BMS (Dev)</div>
+        <div class="nav-item" onclick="showView('producer')">🏭 생산공정 (Prod)</div>
+        <div class="nav-item" onclick="showView('marketer')">📣 마케팅 (Brand)</div>
     </div>
-  </header>
 
-  <main class="container">
-    <section class="hero">
-      <h1>일 잘하는 사람들의<br><span class="highlight">AI 프롬프트</span> 모음</h1>
-      <p>직무별 핵심 프롬프트를 복사하여 바로 업무에 적용해보세요.</p>
-      
-      <div class="search-container">
-        <i class="ph ph-magnifying-glass search-icon"></i>
-        <input type="text" id="search-input" placeholder="원하는 프롬프트를 검색해보세요 (예: SEO, 코드 리뷰)">
-      </div>
-    </section>
+    <div class="main-content">
+        <div class="header">
+            <h1 id="view-title">Global Strategy Overview</h1>
+            <div id="last-update" style="color: var(--text-dim); font-size: 0.8rem;">Last Sync: 2026.04.20 14:02:11</div>
+        </div>
 
-    <section class="controls">
-      <div class="filter-group" id="filter-container">
-        <button class="filter-btn active" data-role="all">전체</button>
-        <button class="filter-btn" data-role="marketer">마케터</button>
-        <button class="filter-btn" data-role="developer">개발자</button>
-        <button class="filter-btn" data-role="designer">디자이너</button>
-        <button class="filter-btn" data-role="planner">기획자</button>
-      </div>
-    </section>
+        <div class="grid-container" id="dashboard-grid">
+            <!-- Planner View (Default) -->
+            <div class="card">
+                <h3>Lithium Price (LCE)</h3>
+                <div class="value">$13.52/kg</div>
+                <div class="trend down">▼ 2.4% vs Last Month</div>
+            </div>
+            <div class="card">
+                <h3>Global Market Share</h3>
+                <div class="value">18.4%</div>
+                <div class="trend up">▲ 1.2% (Target: 25%)</div>
+            </div>
+            <div class="card">
+                <h3>Average Cost ($/kWh)</h3>
+                <div class="value">$82.4</div>
+                <div class="trend down">▼ $3.1 (Optimization)</div>
+            </div>
+            
+            <div class="card half-width">
+                <h3>Competitor Benchmarking (Energy Density)</h3>
+                <canvas id="plannerChart"></canvas>
+            </div>
+            <div class="card">
+                <h3>OEM Demand Index</h3>
+                <ul style="padding-left: 15px; font-size: 0.85rem; color: var(--text-dim); line-height: 2;">
+                    <li>Tesla: 4680 Format ↑</li>
+                    <li>Hyundai: 800V System ↑</li>
+                    <li>VW: ESG Compliance ↑</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
-    <section class="prompt-grid" id="prompt-grid">
-      <!-- Cards will be injected here by JS -->
-    </section>
-  </main>
+    <script src="main.js"></script>
 
-  <div id="toast" class="toast">복사되었습니다!</div>
 
-  <script type="module" src="/main.js"></script>
-</body>
+
+
+
+
+
+
+
+
+
+  </body>
 </html>
